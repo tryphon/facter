@@ -88,6 +88,7 @@ class Facter::Util::Collection
 
   def initialize
     @facts = Hash.new
+    @definitions = Hash.new
   end
 
   # Return a list of all of the facts.
