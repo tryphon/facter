@@ -61,6 +61,10 @@ describe "uptime facts:" do
     before do
       Facter::Util::Uptime.stubs(:get_uptime_seconds_unix).returns(nil)
       Facter::Util::Uptime.stubs(:get_uptime_seconds_win).returns(nil)
+      Facter.collection.loader.load(:uptime_seconds)
+      Facter.collection.loader.load(:uptime_hours)
+      Facter.collection.loader.load(:uptime_days) 
+      Facter.collection.loader.load(:kernel)
       $stderr, @old = StringIO.new, $stderr
     end
 

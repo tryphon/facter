@@ -53,6 +53,10 @@ class Facter::Util::Collection
       raise ArgumentError, "Invalid facter option(s) %s" % options.keys.collect { |k| k.to_s }.join(",")
     end
 
+    unless @definitions.has_key? name 
+      Facter.warnonce("Fact #{name} has only a resolution and no definition. This behavior is deprecated. Please add a fact definition for #{name}.")
+    end
+
     return fact
   end
 
