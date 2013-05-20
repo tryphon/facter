@@ -110,6 +110,16 @@ describe Facter::Util::Loader do
       end
     end
 
+    it "should exclude directories specified by FACTERIGNORE" do
+      dirs = $LOAD_PATH.collect { |d| File.join(d, "facter") }
+      ignored_dir = dirs.first
+
+      @loader = Facter::Util::Loader.new("FACTERIGNORE" => ignored_dir)
+      @loader.stubs(:valid_search_path?).returns(true)
+                                                               
+      @loader.search_path.should_not include(ignored_dir)
+    end
+
     it "should warn the user when an invalid search path has been excluded" do
       dirs = $LOAD_PATH.collect { |d| File.join(d, "facter") }
       @loader.stubs(:valid_search_path?).returns(false)

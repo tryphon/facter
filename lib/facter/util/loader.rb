@@ -60,6 +60,12 @@ class Facter::Util::Loader
       result += @environment_vars["FACTERLIB"].split(File::PATH_SEPARATOR)
     end
 
+    if @environment_vars.include?("FACTERIGNORE")
+      @environment_vars["FACTERIGNORE"].split(File::PATH_SEPARATOR).each do |ignored_regexp|
+        result.delete_if { |path| path =~ %r{#{ignored_regexp}} }
+      end
+    end
+
     # This allows others to register additional paths we should search.
     result += Facter.search_path
 
